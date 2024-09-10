@@ -1,5 +1,5 @@
 
 
-import {Home} from "./modules/Home"
+import { Home } from "/assets/modules/Home.js"
 
 new Home ()
