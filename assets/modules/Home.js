@@ -11,9 +11,9 @@ class Home {
             this.profilHTML = document.querySelector('.js-home-profil-url')
             this.avatarHTML = document.querySelector('.js-home-avatar')
 
-            this.projectTitle = document.querySelector('.js-home-project-title')
-            this.projectDescription = document.querySelector('.js-home-project-description')
-            this.projectTagsContainer = document.querySelector('.js-home-project-tags-container')
+            this.projectsTitle = document.querySelectorAll('.js-home-project-title')
+            this.projectsDescription = document.querySelectorAll('.js-home-project-description')
+            this.projectsTagsContainer = document.querySelectorAll('.js-home-project-tags-container')
 
             this.init()
     }
@@ -36,30 +36,41 @@ init() {
      fetch("https://api.github.com/users/charline-studi")
          .then((response) => response.json())
          .then((data) => {
-            this.updateHTML(data)})
+            this.updateHTMLUser(data)})
 
 
          .catch((error)=>{
         console.log("ERREUR lors de l'appel API", error)})}
 
+//#2 exemple avec okctokit pour les infos de droite, la liste des derniers projets (aller chercher les repos)
+// tout ce qui est en dessous de getReposInfirmations elle l'a trouver dans octokit
+// copier coller de son repos car impossible de trouver mon erreur avant
+async getReposInformations() {
+    const octokit = new Octokit()
+    const response = await octokit
+        .request("GET /users/charline-studi/repos")
+        .catch((error) => {
+            console.log("ERREUR lors de l'appel api getReposInformations", error)})
 
-    updateHTML(APIdata){
+this.updateHTMLProjects(response.data)
+        }
+
+        updateHTMLUser(APIdata){
         this.descriptionHTML.textContent =  APIdata.bio
         this.profilHTML.setAttribute ("href", APIdata.html_url)
         this.avatarHTML.setAttribute ("src", APIdata.avatar_url)}
 
-
-//#2 exemple avec okctokit pour les infos de droite, la liste des derniers projets (aller chercher les repos)
-// tout ce qui est en dessous de getReposInfirmations elle l'a trouver dans octokit
-        async getReposInformations() {
-            const octokit = new Octokit()
-            const response = await octokit.request ("GET /users/charline-studi/repos")
-            console.log(response)
-        }  
-}
-
-    
-
-
-
-export { Home } 
+        updateHTMLProjects(projects) {
+            const maxIndex = projects.length - 1
+            let htmlIndex = 0
+                for(let i = maxIndex; i > maxIndex - 3; i--){
+                const project = projects[i]
+                this.projectsTitle[htmlIndex].textContent = project.name        
+                this.projectsDescription[htmlIndex].textContent = project.description  
+                const languages = project.topics
+                console.log(languages)
+                htmlIndex++
+                
+               
+         } }}
+                export { Home }
