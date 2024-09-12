@@ -52,8 +52,33 @@ async getReposInformations() {
         .catch((error) => {
             console.log("ERREUR lors de l'appel api getReposInformations", error)})
 
-this.updateHTMLProjects(response.data)
-        }
+
+// recentsProjecrs récupère response.data qu'il tri avec la fonction slice
+// puis la boucle for récupère "tant que i est inférieur au élément du tableau tu va faire un appel API"
+//clean URL nettoie l'url, elle demande de remplace ce qui est entre guillemets par "rien"
+
+const recentsProjects = response.data.slice(-3)
+// URL pour récupérer les langages d'un projet :
+// https://api.github.com/repos/charline-studi/{nom-du-repo}/languages
+for (let i = 0; i < recentsProjects.length; i++) {
+        const languagesUrl = recentsProjects[i].languages_url
+        const cleanedUrl = languagesUrl.replace("https://api.github.com", "")
+        const responseLanguages = await octokit
+            .request(`GET ${cleanedUrl}`)
+            .catch((error) => {
+
+             console.log("ERREUR lors de l'appel api getReposInformations - langages", error)
+    })
+
+    //elle utilise le tableau recentProject ou elle envoie la const projectLanguages
+            const projectLanguages = responseLanguages.data
+            recentsProjects[i].languages = projectLanguages
+            console.log(recentsProjects[i])
+        
+   
+}
+            this.updateHTMLProjects(recentsProjects)}
+        
 
         updateHTMLUser(APIdata){
         this.descriptionHTML.textContent =  APIdata.bio
@@ -67,10 +92,32 @@ this.updateHTMLProjects(response.data)
                 const project = projects[i]
                 this.projectsTitle[htmlIndex].textContent = project.name        
                 this.projectsDescription[htmlIndex].textContent = project.description  
-                const languages = project.topics
-                console.log(languages)
+
+                this.createHTMLLanguageTag(this.projectsTagsContainer[i], project.languages)
                 htmlIndex++
                 
                
-         } }}
-                export { Home }
+         } }
+        //elle creer une fonction qui transformer le code en HTML (pas trop compris) 
+        //où (dans les <div> de l'index) la fonction creer le HTML et lequels?
+        //elle rajoute cette fonction dans la boucle ci dessus
+        // les keys sont les noms de propriétées ici ce sont les languages d'un repos
+        // du coup elle creer un tableau arrayLanguages
+        // elle veux faire apparraitre les éléments dans un <span> alors elle utilise la fonction native createElement
+        createHTMLLanguageTag(div, languages){
+        console.log('div', div)
+        console.log('languages', languages)
+        const arrayLanguages = Object.keys(languages)
+        for (let i = 0 ; i<arrayLanguages.length; i++){
+            const span = document.createElement ('span')
+        span.textContent = arrayLanguages[i]
+        div.appendChild(span)
+    
+    }
+
+
+        console.log(arrayLanguages)
+        }}
+
+
+        export { Home }
