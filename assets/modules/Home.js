@@ -73,7 +73,7 @@ for (let i = 0; i < recentsProjects.length; i++) {
     //elle utilise le tableau recentProject ou elle envoie la const projectLanguages
             const projectLanguages = responseLanguages.data
             recentsProjects[i].languages = projectLanguages
-            console.log(recentsProjects[i])
+   
         
    
 }
@@ -105,8 +105,7 @@ for (let i = 0; i < recentsProjects.length; i++) {
         // du coup elle creer un tableau arrayLanguages
         // elle veux faire apparraitre les éléments dans un <span> alors elle utilise la fonction native createElement
         createHTMLLanguageTag(div, languages){
-        console.log('div', div)
-        console.log('languages', languages)
+
         const arrayLanguages = Object.keys(languages)
         for (let i = 0 ; i<arrayLanguages.length; i++){
             const span = document.createElement ('span')
@@ -114,9 +113,6 @@ for (let i = 0; i < recentsProjects.length; i++) {
         div.appendChild(span)
     
     }
-
-
-        console.log(arrayLanguages)
         }}
 
 
