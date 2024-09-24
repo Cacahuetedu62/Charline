@@ -1,5 +1,6 @@
 
     @use "../abstracts/_variables" as var
+    @use "../abstracts/_mixins" as mixin
     
 .header
     background-color: var.$grey 
@@ -9,15 +10,14 @@
     justify-content: space-between
 
     &__back-home
-        width: 2rem
-        height: 2rem
-        border-radius: 100%
+        @include mixin.circle(2rem)
         background-color: var.$light-grey
         display: flex
         justify-content: center
         align-items: center
 
-            &__icon
+        &__icon
         width: 1rem
         height: 1rem
+        padding: 0.75rem
 

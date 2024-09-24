@@ -1,0 +1,36 @@
+@use "../abstracts/_variables" as var
+@use "../abstracts/_mixins" as mixin
+@use "../abstracts/functions" as fct
+
+.hero
+    background-color: var.$rose-pastel
+    padding: fct.rem(71) 2rem fct.rem(58)
+    position: relative
+
+    &__subtitle 
+        @include mixin.font(0.75rem, 600)
+        margin-bottom: fct.rem(32)
+
+
+    &__title
+        @include mixin.font(2rem, 600)
+        margin-bottom: fct.rem(32)
+
+
+    &__description   
+        @include mixin.font(0.75rem, 400)
+        margin-bottom: fct.rem(32)
+
+    &__avatar
+        position: absolute
+        top: fct.rem(22)
+        right: fct.rem(-15)
+        @include mixin.circle(fct.rem(137))
+    
+        img
+            width: 100%
+            height: 100%
+            object-fit: cover
+
+
+

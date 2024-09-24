@@ -1,9 +1,10 @@
 @use "../abstracts/_variables" as var
+@use "../abstracts/_mixins" as mixin
 
 .button
     background-color: var.$light-grey
     border-radius: 0.5rem
-    color: var.$white
+    color: var.$black
     padding: 0.5rem 0.75rem
     display: inline-flex
     align-items: center
@@ -11,14 +12,14 @@
 
     &--secondary
         @extend .button
-        border: solid 1px var.$white
+        border: solid 1px var.$black
         background-color: transparent
 
     &__icon
-        width: 1.25rem
-        height: 1.25rem
+        width: 1rem
+        height: 1rem
 
     &__label
-        font-family: 'Playwrite CU', sans-serif
-        font-size: 1.25rem
+        font-family: "Playwrite CU", cursive
+        font-size: 0.75rem
         font-weight: 400
